@@ -110,7 +110,7 @@ class PlayState extends FlxState
 		FlxG.collide(player, level);
 
 
-
+		updatePlayer(player);
 		
 
 		super.update();
@@ -134,14 +134,14 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keys.justPressed.X)
 		{
-			teleport(player);
+			teleport(player, level);
 		}
 	}
 
 	private function teleport(sprite:FlxSprite, level:FlxTilemap):FlxSprite
 	{
 		// if teleport is ready
-		destination = getTeleportDestination(sprite.getScreenXY(), level);
+		var destination:FlxPoint = getTeleportDestination(sprite.getScreenXY(), level);
 		sprite.x = destination.x;
 		sprite.y = destination.y;
 		return sprite;
@@ -151,11 +151,11 @@ class PlayState extends FlxState
 	{
 		if (origin.y > container.height / 2)
 		{
-			return new FlxPoint(origin.x, origin.y - container.height / 2);
+			return new FlxPoint(origin.x, container.height - origin.y);
 		}
 		else
 		{
-			return new FlxPoint(origin.x, origin.y + container.height / 2);
+			return new FlxPoint(origin.x, -origin.y + container.height);
 		}
 	}
 }
