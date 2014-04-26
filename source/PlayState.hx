@@ -1,0 +1,161 @@
+package;
+
+import flixel.FlxG;
+import flixel.FlxObject;
+import flixel.util.FlxPoint;
+import flixel.FlxSprite;
+import flixel.tile.FlxTilemap;
+import flixel.FlxState;
+import flixel.text.FlxText;
+import flixel.ui.FlxButton;
+import flixel.util.FlxMath;
+import flixel.util.FlxColor;
+
+/**
+ * A FlxState which can be used for the actual gameplay.
+ */
+class PlayState extends FlxState
+{
+
+	private var player:FlxSprite;
+	private var level:FlxTilemap;
+
+	/**
+	 * Function that is called up when to state is created to set it up. 
+	 */
+	override public function create():Void
+	{
+
+		
+
+
+		// // Set up the stage
+		level = new FlxTilemap();
+
+		// Here's a giant string because whatever Haxe says to do doesn't work
+		var stage:String = "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,";
+
+		level.loadMap(stage, 'assets/images/basic-tiles.png');
+
+
+// Set up Player
+		player = new FlxSprite();
+		player.x = level.width / 2;
+		player.y = level.height / 2;
+		player.maxVelocity.x = 80;
+		player.maxVelocity.y = 300;
+		player.acceleration.y = 150;
+
+		player.drag.x = 80;
+
+		player.makeGraphic(7, 7, FlxColor.WHITE);
+
+
+		// Add all the things
+		add(player);
+		add(level);
+
+		super.create();
+	}
+	
+	/**
+	 * Function that is called when this state is destroyed - you might want to 
+	 * consider setting all objects this state uses to null to help garbage collection.
+	 */
+	override public function destroy():Void
+	{
+		super.destroy();
+	}
+
+	/**
+	 * Function that is called once every frame.
+	 */
+	override public function update():Void
+	{
+		// updatePlayer(player);
+
+		FlxG.collide(player, level);
+
+
+
+		
+
+		super.update();
+	}
+
+	private function updatePlayer(player:FlxSprite):Void
+	{
+		player.acceleration.x = 0;
+
+		if (FlxG.keys.pressed.LEFT)
+		{
+			player.acceleration.x = -player.maxVelocity.x * 8;
+		}
+		if (FlxG.keys.pressed.RIGHT)
+		{
+			player.acceleration.x = player.maxVelocity.x * 8;
+		}
+		if (FlxG.keys.justPressed.UP && player.isTouching(FlxObject.FLOOR))
+		{
+			player.velocity.y = -player.maxVelocity.y / 2;
+		}
+		if (FlxG.keys.justPressed.X)
+		{
+			teleport(player);
+		}
+	}
+
+	private function teleport(sprite:FlxSprite, level:FlxTilemap):FlxSprite
+	{
+		// if teleport is ready
+		destination = getTeleportDestination(sprite.getScreenXY(), level);
+		sprite.x = destination.x;
+		sprite.y = destination.y;
+		return sprite;
+	}
+
+	private function getTeleportDestination(origin:FlxPoint, container:FlxTilemap):FlxPoint
+	{
+		if (origin.y > container.height / 2)
+		{
+			return new FlxPoint(origin.x, origin.y - container.height / 2);
+		}
+		else
+		{
+			return new FlxPoint(origin.x, origin.y + container.height / 2);
+		}
+	}
+}
