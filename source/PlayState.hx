@@ -19,6 +19,7 @@ class PlayState extends FlxState
 
 	private var player:FlxSprite;
 	private var level:FlxTilemap;
+	private var enemies:FlxGroup;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -71,7 +72,7 @@ class PlayState extends FlxState
 		level.loadMap(stage, 'assets/images/basic-tiles.png');
 
 
-// Set up Player
+		// Set up Player
 		player = new FlxSprite();
 		player.x = level.width / 2;
 		player.y = level.height / 2;
@@ -83,10 +84,17 @@ class PlayState extends FlxState
 
 		player.makeGraphic(7, 7, FlxColor.WHITE);
 
+		// Enemies
+		enemies = new FlxGroup();
+		enemies.add(new Enemy(level.width / 4, level.height / 4));
+
+
+
 
 		// Add all the things
 		add(player);
 		add(level);
+		add(enemies);
 
 		super.create();
 	}
@@ -108,6 +116,7 @@ class PlayState extends FlxState
 		// updatePlayer(player);
 
 		FlxG.collide(player, level);
+		FlxG.collide(enemies, level);
 
 
 		updatePlayer(player);
