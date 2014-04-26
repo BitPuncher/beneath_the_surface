@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.group.FlxGroup;
 import flixel.util.FlxPoint;
 import flixel.FlxSprite;
 import flixel.tile.FlxTilemap;
@@ -75,8 +76,8 @@ class PlayState extends FlxState
 		// Set up Player
 		player = new FlxSprite();
 		player.x = level.width / 2;
-		player.y = level.height / 2;
-		player.maxVelocity.x = 80;
+		player.y = level.height / 3;
+		player.maxVelocity.x = 90;
 		player.maxVelocity.y = 300;
 		player.acceleration.y = 150;
 
@@ -86,14 +87,15 @@ class PlayState extends FlxState
 
 		// Enemies
 		enemies = new FlxGroup();
-		enemies.add(new Enemy(level.width / 4, level.height / 4));
+		var enemy:Enemy = new Enemy(Math.floor(level.width / 2), Math.floor(level.height / 4));
+		enemies.add(enemy);
 
 
 
 
 		// Add all the things
-		add(player);
 		add(level);
+		add(player);
 		add(enemies);
 
 		super.create();
@@ -117,10 +119,14 @@ class PlayState extends FlxState
 
 		FlxG.collide(player, level);
 		FlxG.collide(enemies, level);
+		FlxG.collide(enemies, player);
 
 
 		updatePlayer(player);
-		
+
+		// This isn't working as intended for whatever reason. Might be its order in update. 
+		// enemies.callAll('lookForPlayer', [player]);
+
 
 		super.update();
 	}

@@ -2,24 +2,32 @@ package;
 
 import flixel.FlxSprite;
 import flixel.util.FlxMath;
+import flixel.FlxObject;
+import flixel.util.FlxColor;
 
 class Enemy extends FlxSprite {
 
-	private var facing:Int = 1;
+	private var chaseSpeed:Int = 80;
+	private var walkSpeed:Int = 60;
 
-	override public function create(x:Int, y:Int){
+	override public function new(x:Int, y:Int){
+		super();
+
 		this.x = x;
 		this.y = y;
 
-		maxVelocity.x = 60;
-		maxVelocity.y = 300;
-		acceleration.y = 150;
+		this.maxVelocity.x = walkSpeed;
+		this.maxVelocity.y = 300;
+		this.acceleration.y = 150;
 
-		super.create();
+		this.makeGraphic(7, 7, FlxColor.RED);
 	}
 
 	override public function update() {
-		//switch facing if its about to go off a ledge?
+		//switch facing if its about to go off a ledge or hit a wall?
+		if (this.isTouching(FlxObject.WALL)) {
+			this.facing *= -1;
+		}
 
 		//moves
 		acceleration.x = facing * maxVelocity.x / 4;
@@ -33,10 +41,19 @@ class Enemy extends FlxSprite {
 	}
 
 	public function lookForPlayer(player:FlxSprite):Void {
-		var distanceFromPlayer:Int = FlxMath.getDistance(player.getScreenXY(), this.getScreenXY());
+		var distanceFromPlayer:Float = FlxMath.getDistance(player.getScreenXY(), this.getScreenXY());
 
-		if (distanceFromPlayer < 20) {
-			this.facing = (player.x - this.x) % 1;
+		if (Math.abs(distanceFromPlayer) < 40) {
+			this.maxVelocity.x = chaseSpeed;
+			if (player.x - this.x > 0){
+				this.facing = FlxObject.RIGHT;
+			}
+			else {
+				this.facing = FlxObject.LEFT;
+			}
+		}
+		else {
+			this.maxVelocity.x = walkSpeed;
 		}
 	}
 }
