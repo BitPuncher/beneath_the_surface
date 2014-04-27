@@ -86,7 +86,7 @@ class PlayState extends FlxState
 		player.maxVelocity.y = 300;
 		player.acceleration.y = 150;
 
-		player.drag.x = 80;
+		player.drag.x = 100;
 
 		player.makeGraphic(7, 7, FlxColor.WHITE);
 
@@ -95,12 +95,15 @@ class PlayState extends FlxState
 		spawns.insert(0, new FlxPoint(160, 270));
 		spawns.insert(1, new FlxPoint(60, 220));
 		spawns.insert(2, new FlxPoint(280, 220));
+		spawns.insert(3, new FlxPoint(110, 60));
+		spawns.insert(4, new FlxPoint(50, 110));
+		spawns.insert(5, new FlxPoint(220, 110));
 
 		// Enemies
 		enemies = new FlxGroup();
-		var enemy:Enemy = new Enemy(Math.floor(level.width / 2), Math.floor(level.height / 4));
-		enemies.add(enemy);
-
+		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y)), FlxColor.YELLOW);
+		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y)), FlxColor.YELLOW);
+		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y)), FlxColor.YELLOW);
 
 		// Timer
 		timer = new FlxTimer();
