@@ -46,6 +46,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("teleport_start", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("teleport_end", __ASSET__assets_sounds_teleport_end_wav);
 		type.set ("teleport_end", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("fire_bullet", __ASSET__assets_sounds_fire_bullet_wav);
+		type.set ("fire_bullet", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wave);
+		type.set ("enemy_death", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
@@ -65,6 +69,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		addExternal("teleport_fail", "sound", "assets/sounds/teleport_fail.wav");
 		addExternal("teleport_start", "sound", "assets/sounds/teleport_start.wav");
 		addExternal("teleport_end", "sound", "assets/sounds/teleport_end.wav");
+		addExternal("fire_bullet", "sound", "assets/sounds/fire_bullet.wav");
+		addExternal("enemy_death", "sound", "assets/sounds/enemy_death.wave");
 		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
 		addExternal("hunting_and_green", "music", "assets/music/hunting_and_green.wav");
 		addExternal("a_black_horse", "music", "assets/music/a_black_horse.wav");
@@ -92,6 +98,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("teleport_end", __ASSET__assets_sounds_teleport_end_wav);
 		type.set ("teleport_end", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
+		className.set ("fire_bullet", __ASSET__assets_sounds_fire_bullet_wav);
+		type.set ("fire_bullet", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
+		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wave);
+		type.set ("enemy_death", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
@@ -695,6 +707,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep class __ASSET__assets_sounds_teleport_fail_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_fire_bullet_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound { }
@@ -716,6 +730,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
 #elseif (windows || mac || linux)
 
 
@@ -724,6 +740,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:sound("assets/sounds/teleport_fail.wav") class __ASSET__assets_sounds_teleport_fail_wav extends flash.media.Sound {}
 @:sound("assets/sounds/teleport_start.wav") class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound {}
 @:sound("assets/sounds/teleport_end.wav") class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound {}
+@:sound("assets/sounds/fire_bullet.wav") class __ASSET__assets_sounds_fire_bullet_wav extends flash.media.Sound {}
+@:sound("assets/sounds/enemy_death.wave") class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
 @:sound("assets/music/hunting_and_green.wav") class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound {}
 @:sound("assets/music/a_black_horse.wav") class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound {}

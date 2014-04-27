@@ -30,12 +30,17 @@
 	<set name="BUILD_DIR" value="export" />
 	<classpath name="source" />
 	<assets path="assets">
+		<!-- sounds -->
 		<sound path="sounds/enemy_spawn.wav" id="enemy_spawn" />
 		<sound path="sounds/player_jump.wav" id="player_jump" />
 		<sound path="sounds/teleport_fail.wav" id="teleport_fail" />
 		<sound path="sounds/teleport_start.wav" id="teleport_start" />
 		<sound path="sounds/teleport_end.wav" id="teleport_end" />
+		<sound path="sounds/fire_bullet.wav" id="fire_bullet" />
+		<sound path="sounds/enemy_death.wave" id="enemy_death" />
+		<!-- images -->
 		<image path="images/basic-tiles.png" id="basic-tiles" />
+		<!-- music -->
 		<music path="music/hunting_and_green.wav" id="hunting_and_green" />
 		<music path="music/a_black_horse.wav" id="a_black_horse" />
 	</assets>

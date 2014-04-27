@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxMath;
 import flixel.FlxObject;
 import flixel.util.FlxColor;
+import flixel.FlxG;
 
 class Enemy extends FlxSprite {
 
@@ -34,6 +35,11 @@ class Enemy extends FlxSprite {
 
 		//moves
 		acceleration.x = facing * maxVelocity.x / 4;
+
+		//Death
+		if (health <= 0) {
+			FlxG.sound.play("enemy_death");
+		}
 
 		super.update();
 	}

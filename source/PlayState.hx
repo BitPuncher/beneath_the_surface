@@ -14,6 +14,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.addons.weapon.FlxWeapon;
+import flixel.system.FlxSound;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -129,6 +130,8 @@ class PlayState extends FlxState
 		weapon.setBulletLifeSpan(0);
 		weapon.setFireRate(250);
 		weapon.setBulletSpeed(250);
+		weapon.onFireSound = new FlxSound().loadEmbedded("fire_bullet");
+
 		facingConversion = new Map();
 		facingConversion.set(FlxObject.DOWN, FlxWeapon.BULLET_DOWN);
 		facingConversion.set(FlxObject.RIGHT, FlxWeapon.BULLET_RIGHT);
@@ -213,7 +216,6 @@ class PlayState extends FlxState
 		{
 			weapon.setBulletDirection(facingConversion[player.facing], weapon.bulletSpeed);
 			weapon.fire();
-			
 		}
 	}
 
