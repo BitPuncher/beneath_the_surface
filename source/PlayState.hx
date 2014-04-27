@@ -15,6 +15,7 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.addons.weapon.FlxWeapon;
 import flixel.system.FlxSound;
+import flixel.ui.FlxBar;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -34,6 +35,11 @@ class PlayState extends FlxState
 	private var teleportCooldownTimer:FlxTimer;
 	private var weapon:FlxWeapon;
 	private var facingConversion:Map<Int, Int>;
+	private var pickups:FlxGroup;
+	private var firingCost:Int = 15;
+	private var resource:Int = 0;
+	private var maxResource:Int = 100;
+	private var resourceBar:FlxBar;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -130,13 +136,19 @@ class PlayState extends FlxState
 		weapon.setBulletLifeSpan(0);
 		weapon.setFireRate(250);
 		weapon.setBulletSpeed(250);
-		weapon.onFireSound = new FlxSound().loadEmbedded("fire_bullet");
+		weapon.setFireCallback(loseResource, new FlxSound().loadEmbedded("fire_bullet"));
 
 		facingConversion = new Map();
 		facingConversion.set(FlxObject.DOWN, FlxWeapon.BULLET_DOWN);
 		facingConversion.set(FlxObject.RIGHT, FlxWeapon.BULLET_RIGHT);
 		facingConversion.set(FlxObject.LEFT, FlxWeapon.BULLET_LEFT);
 
+		// Resource
+		resource = 0;
+		resourceBar = new FlxBar(level.width + 10, 30, FlxBar.FILL_LEFT_TO_RIGHT, 150, 15, null, resource);
+
+		// Pickups
+		pickups = new FlxGroup();
 
 		// Add all the things
 		add(level);
@@ -144,6 +156,7 @@ class PlayState extends FlxState
 		add(enemies);
 		add(timerText);
 		add(weapon.group);
+		add(resourceBar);
 
 		FlxG.sound.play('hunting_and_green', 1, true);
 
@@ -212,7 +225,7 @@ class PlayState extends FlxState
 		{
 			teleport(player, level);
 		}
-		if (FlxG.keys.pressed.C)
+		if (FlxG.keys.pressed.C && playerHasResources())
 		{
 			weapon.setBulletDirection(facingConversion[player.facing], weapon.bulletSpeed);
 			weapon.fire();
@@ -274,8 +287,24 @@ class PlayState extends FlxState
 		object.hurt(50);
 	}
 
-	// Timer callbacks
+	private function loseResource():Void
+	{
+		if (player.y > level.height / 2) {
+			resource -= firingCost;
+		}
+	}
 
+	private function playerHasResources():Bool
+	{
+		if (player.y < level.height / 2 || resource >= firingCost) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	// Timer callbacks
 	private function spawnWave(timer:FlxTimer):Void
 	{
 		var spawn:FlxPoint = spawns[timer.elapsedLoops % 3];
