@@ -12,6 +12,7 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
+import flixel.tweens.FlxTween;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -26,6 +27,9 @@ class PlayState extends FlxState
 	private var timerText:FlxText;
 	private var timeToWave:Int = 7;
 	private var spawns:Array<FlxPoint>;
+	private var teleportReady:Bool = true;
+	private var teleportCooldown:Int = 2;
+	private var teleportCooldownTimer:FlxTimer;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -105,10 +109,12 @@ class PlayState extends FlxState
 		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), FlxColor.YELLOW));
 		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), FlxColor.YELLOW));
 
-		// Timer
+		// Timers
 		timer = new FlxTimer();
 		timer.start(timeToWave, spawnWave, 0);
 		timerText = new FlxText(level.width + 10, 10, 30, 1 + ":" + timer.elapsedTime);
+
+		teleportCooldownTimer = new FlxTimer();
 
 
 		// Add all the things
@@ -116,6 +122,8 @@ class PlayState extends FlxState
 		add(player);
 		add(enemies);
 		add(timerText);
+
+		FlxG.sound.play('hunting_and_green', 1, true);
 
 		super.create();
 	}
@@ -176,13 +184,35 @@ class PlayState extends FlxState
 		}
 	}
 
-	private function teleport(sprite:FlxSprite, level:FlxTilemap):FlxSprite
+	private function teleport(sprite:FlxSprite, level:FlxTilemap):Bool
 	{
-		// if teleport is ready
-		var destination:FlxPoint = getTeleportDestination(sprite.getScreenXY(), level);
-		sprite.x = destination.x;
-		sprite.y = destination.y;
-		return sprite;
+		if (teleportReady) {
+			teleportReady = false;
+			teleportCooldownTimer.start(teleportCooldown, tpTimerFinished, 1);
+
+			//shake the sprite or something
+			FlxG.sound.play('teleport_start');
+			var accel:Float = sprite.acceleration.y;
+			sprite.acceleration.y = 0;
+
+			function finishTeleport(tween:FlxTween):Void
+			{
+				FlxG.sound.play('teleport_end');
+				var destination:FlxPoint = getTeleportDestination(sprite.getScreenXY(), level);
+				sprite.x = destination.x;
+				sprite.y = destination.y;
+				sprite.acceleration.y = accel;
+			}
+
+			FlxTween.tween(sprite, {y: sprite.y - 10}, 1.3, {complete: finishTeleport});
+			
+			return true;
+		}
+		else {
+			FlxG.sound.play('teleport_fail');
+			return false;
+		}
+		
 	}
 
 	private function getTeleportDestination(origin:FlxPoint, container:FlxTilemap):FlxPoint
@@ -197,10 +227,17 @@ class PlayState extends FlxState
 		}
 	}
 
+	// Timer callbacks
+
 	private function spawnWave(timer:FlxTimer):Void
 	{
 		var spawn:FlxPoint = spawns[timer.elapsedLoops % 3];
 		enemies.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y)));
 		FlxG.sound.play("enemy_spawn");
+	}
+
+	private function tpTimerFinished(timer:FlxTimer):Void
+	{
+		teleportReady = true;
 	}
 }

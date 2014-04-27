@@ -32,7 +32,11 @@
 	<assets path="assets">
 		<sound path="sounds/enemy_spawn.wav" id="enemy_spawn" />
 		<sound path="sounds/player_jump.wav" id="player_jump" />
+		<sound path="sounds/teleport_fail.wav" id="teleport_fail" />
+		<sound path="sounds/teleport_start.wav" id="teleport_start" />
+		<sound path="sounds/teleport_end.wav" id="teleport_end" />
 		<image path="images/basic-tiles.png" id="basic-tiles" />
+		<music path="music/hunting_and_green.wav" id="hunting_and_green" />
 	</assets>
 	
 	<!--------------------------------LIBRARIES------------------------------------->

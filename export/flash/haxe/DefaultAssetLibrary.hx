@@ -40,8 +40,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("enemy_spawn", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("player_jump", __ASSET__assets_sounds_player_jump_wav);
 		type.set ("player_jump", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("teleport_fail", __ASSET__assets_sounds_teleport_fail_wav);
+		type.set ("teleport_fail", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("teleport_start", __ASSET__assets_sounds_teleport_start_wav);
+		type.set ("teleport_start", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("teleport_end", __ASSET__assets_sounds_teleport_end_wav);
+		type.set ("teleport_end", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
+		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("assets/sounds/flixel.mp3", __ASSET__assets_sounds_flixel_mp3);
@@ -52,7 +60,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		addExternal("enemy_spawn", "sound", "assets/sounds/enemy_spawn.wav");
 		addExternal("player_jump", "sound", "assets/sounds/player_jump.wav");
+		addExternal("teleport_fail", "sound", "assets/sounds/teleport_fail.wav");
+		addExternal("teleport_start", "sound", "assets/sounds/teleport_start.wav");
+		addExternal("teleport_end", "sound", "assets/sounds/teleport_end.wav");
 		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
+		addExternal("hunting_and_green", "music", "assets/music/hunting_and_green.wav");
 		addExternal("assets/sounds/beep.mp3", "music", "assets/sounds/beep.mp3");
 		addExternal("assets/sounds/flixel.mp3", "music", "assets/sounds/flixel.mp3");
 		
@@ -69,8 +81,20 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("player_jump", __ASSET__assets_sounds_player_jump_wav);
 		type.set ("player_jump", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
+		className.set ("teleport_fail", __ASSET__assets_sounds_teleport_fail_wav);
+		type.set ("teleport_fail", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
+		className.set ("teleport_start", __ASSET__assets_sounds_teleport_start_wav);
+		type.set ("teleport_start", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
+		className.set ("teleport_end", __ASSET__assets_sounds_teleport_end_wav);
+		type.set ("teleport_end", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
+		
+		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
+		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
 		
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
@@ -662,7 +686,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 @:keep class __ASSET__assets_sounds_enemy_spawn_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_player_jump_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_teleport_fail_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound { }
 
@@ -676,12 +704,20 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
 #elseif (windows || mac || linux)
 
 
 @:sound("assets/sounds/enemy_spawn.wav") class __ASSET__assets_sounds_enemy_spawn_wav extends flash.media.Sound {}
 @:sound("assets/sounds/player_jump.wav") class __ASSET__assets_sounds_player_jump_wav extends flash.media.Sound {}
+@:sound("assets/sounds/teleport_fail.wav") class __ASSET__assets_sounds_teleport_fail_wav extends flash.media.Sound {}
+@:sound("assets/sounds/teleport_start.wav") class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound {}
+@:sound("assets/sounds/teleport_end.wav") class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
+@:sound("assets/music/hunting_and_green.wav") class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/beep.mp3") class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/flixel.mp3") class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound {}
 
