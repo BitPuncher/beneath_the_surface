@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.util.FlxTimer;
 import flixel.FlxObject;
 import flixel.group.FlxGroup;
 import flixel.util.FlxPoint;
@@ -21,6 +22,10 @@ class PlayState extends FlxState
 	private var player:FlxSprite;
 	private var level:FlxTilemap;
 	private var enemies:FlxGroup;
+	private var timer:FlxTimer;
+	private var timerText:FlxText;
+	private var timeToWave:Int = 7;
+	private var spawns:Array<FlxPoint>;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -85,18 +90,29 @@ class PlayState extends FlxState
 
 		player.makeGraphic(7, 7, FlxColor.WHITE);
 
+		// Enemy spawn locations
+		spawns = new Array<FlxPoint>();
+		spawns.insert(0, new FlxPoint(160, 270));
+		spawns.insert(1, new FlxPoint(60, 220));
+		spawns.insert(2, new FlxPoint(280, 220));
+
 		// Enemies
 		enemies = new FlxGroup();
 		var enemy:Enemy = new Enemy(Math.floor(level.width / 2), Math.floor(level.height / 4));
 		enemies.add(enemy);
 
 
+		// Timer
+		timer = new FlxTimer();
+		timer.start(timeToWave, spawnWave, 0);
+		timerText = new FlxText(level.width + 10, 10, 30, 1 + ":" + timer.elapsedTime);
 
 
 		// Add all the things
 		add(level);
 		add(player);
 		add(enemies);
+		add(timerText);
 
 		super.create();
 	}
@@ -120,6 +136,9 @@ class PlayState extends FlxState
 		FlxG.collide(player, level);
 		FlxG.collide(enemies, level);
 		FlxG.collide(enemies, player);
+
+		// secondsToWave = Math.floor(FlxG.elapsed) % timeToWave;
+		timerText.text = (timer.elapsedLoops + 1) + ":" + Math.ceil(timer.timeLeft);
 
 
 		updatePlayer(player);
@@ -172,5 +191,11 @@ class PlayState extends FlxState
 		{
 			return new FlxPoint(origin.x, -origin.y + container.height);
 		}
+	}
+
+	private function spawnWave(timer:FlxTimer):Void
+	{
+		var spawn:FlxPoint = spawns[timer.elapsedLoops % 3];
+		enemies.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y)));
 	}
 }
