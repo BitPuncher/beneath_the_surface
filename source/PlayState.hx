@@ -42,11 +42,21 @@ class PlayState extends FlxState
 	private var resource:FlxSprite;
 	private var maxResource:Int = 100;
 	private var resourceBar:FlxBar;
+	private var resourceLabel:FlxText;
 	private var muteButton:FlxButton;
 	private var muted:Bool = false;
 	private var instructions:FlxText;
 	private var controls:FlxSprite;
 	private var arrows:FlxSprite;
+	private var score:Int;
+	private var scoreText:FlxText;
+	private var scoreLabel:FlxText;
+	// private var gameTime:Int = 5;
+	// private var gameOver:Bool = false;
+	// private var gameClock:FlxTimer;
+	// private var gameClockText:FlxText;
+	// private var gameClockLabel:FlxText;
+	// private var gameOverSprite:FlxSprite;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -136,6 +146,15 @@ class PlayState extends FlxState
 		timer.start(timeToWave, spawnWave, 0);
 		timerText = new FlxText(level.width + 10, 10, 30, 1 + ":" + timer.elapsedTime);
 
+		// gameClock = new FlxTimer();
+		// gameClock.start(gameTime, timeUp, 1);
+		// gameClockText = new FlxText(0, 0, 50, "180");
+		// gameClockLabel = new FlxText(0, 0, 100, "Time Left: ");
+
+		// gameOverSprite = new FlxSprite();
+		// gameOverSprite.makeGraphic(FlxG.width, FlxG.height, 0xff000000);
+		// gameOverSprite.alpha = 0;
+
 		teleportCooldownTimer = new FlxTimer();
 
 		// Bullets
@@ -157,7 +176,8 @@ class PlayState extends FlxState
 		// Resource
 		resource = new FlxSprite(0, 0);
 		resource.visible = false;
-		resourceBar = new FlxBar(level.width + 10, 30, FlxBar.FILL_LEFT_TO_RIGHT, 100, 15, resource, "health");
+		resourceLabel = new FlxText(level.width + 10, 30, 80, "Resource Left:");
+		resourceBar = new FlxBar(level.width + 10 + resourceLabel.width, 30, FlxBar.FILL_LEFT_TO_RIGHT, 100, 15, resource, "health");
 
 		// Pickups
 		pickups = new FlxGroup();
@@ -170,6 +190,11 @@ class PlayState extends FlxState
 		controls.loadGraphic("controls");
 		// muteButton = new FlxButton(level.width + 10, 50, "Mute", muteSound);
 
+		// Score
+		score = 0;
+		scoreLabel = new FlxText(level.width + 10, 170, 60, "Score:");
+		scoreText = new FlxText(scoreLabel.x + scoreLabel.width + 5, scoreLabel.y, 50, "0");
+
 		// Add all the things
 		add(level);
 		add(player);
@@ -177,11 +202,16 @@ class PlayState extends FlxState
 		add(yellows);
 		add(timerText);
 		add(weapon.group);
+		add(resourceLabel);
 		add(resourceBar);
 		add(pickups);
 		add(instructions);
 		add(arrows);
 		add(controls);
+		add(scoreLabel);
+		add(scoreText);
+		// add(gameClockLabel);
+		// add(gameClockText);
 		// add(muteButton);
 
 
@@ -220,9 +250,12 @@ class PlayState extends FlxState
 
 		// secondsToWave = Math.floor(FlxG.elapsed) % timeToWave;
 		timerText.text = (timer.elapsedLoops + 1) + ":" + Math.ceil(timer.timeLeft);
+		scoreText.text = score + "";
+		// gameClockText.text = Math.ceil(gameClock.timeLeft) + "";
 
-
-		updatePlayer(player);
+		// if (!gameOver) {
+			updatePlayer(player);
+		// }
 
 		// This isn't working as intended for whatever reason. Might be its order in update. 
 		// enemies.callAll('lookForPlayer', [player]);
@@ -319,8 +352,11 @@ class PlayState extends FlxState
 		bullet.kill();
 		object.hurt(50);
 
-		if (object.health <= 0 && object.spawnsPickups) {
-			pickups.add(new Pickup(object.x, object.y));
+		if (object.health <= 0) {
+			if (object.spawnsPickups) {
+				pickups.add(new Pickup(object.x, object.y));
+			}
+			score += object.value;
 		}
 	}
 
@@ -338,7 +374,7 @@ class PlayState extends FlxState
 	// Resource callbacks
 	private function gainResource(pickup:Pickup, player:FlxSprite):Void {
 		pickup.kill();
-		resource.health = FlxMath.bound(Math.round(maxResource / 3) + resource.health, 0, maxResource);
+		resource.health = FlxMath.bound(Math.round(maxResource / 4) + resource.health, 0, maxResource);
 	}
 
 	private function loseResource():Void
@@ -378,4 +414,11 @@ class PlayState extends FlxState
 			FlxG.sound.pause();
 		}
 	}
+
+	// private function timeUp(timer:FlxTimer):Void {
+	// 	gameOver = true;
+	// 	FlxG.stage.alpha = .5;
+	// 	add(gameOverSprite);
+	// 	add(new FlxText(level.width / 2, level.height / 2, 100, "Game Over \n Score: " + score));
+	// }
 }
