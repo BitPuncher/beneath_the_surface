@@ -12,12 +12,27 @@ import flixel.util.FlxMath;
  */
 class MenuState extends FlxState
 {
+	private var title:FlxSprite;
+	private var press:FlxButton;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+
+		title = new FlxSprite(300, 300);
+		title.loadGraphic("title");
+
+		press = new FlxButton(600, 450, "Press ENTER to Start", startGame);
+
+		FlxG.sound.muteKeys = ["M"]
+
+		FlxG.sound.playMusic("a_black_horse", 5, true);
+
+		add(title);
+		add(press);
 	}
 	
 	/**
@@ -36,4 +51,9 @@ class MenuState extends FlxState
 	{
 		super.update();
 	}	
+
+	private function startGame():Void {
+		FlxG.switchState(PlayState);
+	}
+
 }

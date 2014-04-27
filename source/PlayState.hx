@@ -38,7 +38,7 @@ class PlayState extends FlxState
 	private var weapon:FlxWeapon;
 	private var facingConversion:Map<Int, Int>;
 	private var pickups:FlxGroup;
-	private var firingCost:Int = 15;
+	private var firingCost:Int = 5;
 	private var resource:FlxSprite;
 	private var maxResource:Int = 100;
 	private var resourceBar:FlxBar;
