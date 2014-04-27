@@ -22,12 +22,13 @@ class MenuState extends FlxState
 	{
 		super.create();
 
-		title = new FlxSprite(300, 300);
+		title = new FlxSprite(0, 0);
 		title.loadGraphic("title");
 
-		press = new FlxButton(600, 450, "Press ENTER to Start", startGame);
+		press = new FlxButton(title.width / 2, title.height, "Press to Start", startGame);
+		press.width = press.width * 2;
 
-		FlxG.sound.muteKeys = ["M"]
+		FlxG.sound.muteKeys = ["M"];
 
 		FlxG.sound.playMusic("a_black_horse", 5, true);
 
@@ -53,7 +54,8 @@ class MenuState extends FlxState
 	}	
 
 	private function startGame():Void {
-		FlxG.switchState(PlayState);
+		FlxG.sound.pause();
+		FlxG.switchState(new PlayState());
 	}
 
 }
