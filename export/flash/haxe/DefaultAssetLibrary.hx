@@ -36,18 +36,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#if flash
 		
-		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
-		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("assets/data/stage.csv", __ASSET__assets_data_stage_csv);
-		type.set ("assets/data/stage.csv", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("assets/images/basic-tiles.png", __ASSET__assets_images_basic_tiles_png);
-		type.set ("assets/images/basic-tiles.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
-		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
-		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
-		type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("enemy_spawn", __ASSET__assets_sounds_enemy_spawn_wav);
+		type.set ("enemy_spawn", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("player_jump", __ASSET__assets_sounds_player_jump_wav);
+		type.set ("player_jump", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
+		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("assets/sounds/flixel.mp3", __ASSET__assets_sounds_flixel_mp3);
@@ -56,12 +50,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		#elseif html5
 		
-		addExternal("assets/data/data-goes-here.txt", "text", "assets/data/data-goes-here.txt");
-		addExternal("assets/data/stage.csv", "text", "assets/data/stage.csv");
-		addExternal("assets/images/basic-tiles.png", "image", "assets/images/basic-tiles.png");
-		addExternal("assets/images/images-go-here.txt", "text", "assets/images/images-go-here.txt");
-		addExternal("assets/music/music-goes-here.txt", "text", "assets/music/music-goes-here.txt");
-		addExternal("assets/sounds/sounds-go-here.txt", "text", "assets/sounds/sounds-go-here.txt");
+		addExternal("enemy_spawn", "sound", "assets/sounds/enemy_spawn.wav");
+		addExternal("player_jump", "sound", "assets/sounds/player_jump.wav");
+		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
 		addExternal("assets/sounds/beep.mp3", "music", "assets/sounds/beep.mp3");
 		addExternal("assets/sounds/flixel.mp3", "music", "assets/sounds/flixel.mp3");
 		
@@ -72,23 +63,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		var loadManifest = false;
 		
-		className.set ("assets/data/data-goes-here.txt", __ASSET__assets_data_data_goes_here_txt);
-		type.set ("assets/data/data-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("enemy_spawn", __ASSET__assets_sounds_enemy_spawn_wav);
+		type.set ("enemy_spawn", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
-		className.set ("assets/data/stage.csv", __ASSET__assets_data_stage_csv);
-		type.set ("assets/data/stage.csv", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("player_jump", __ASSET__assets_sounds_player_jump_wav);
+		type.set ("player_jump", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
-		className.set ("assets/images/basic-tiles.png", __ASSET__assets_images_basic_tiles_png);
-		type.set ("assets/images/basic-tiles.png", Reflect.field (AssetType, "image".toUpperCase ()));
-		
-		className.set ("assets/images/images-go-here.txt", __ASSET__assets_images_images_go_here_txt);
-		type.set ("assets/images/images-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		
-		className.set ("assets/music/music-goes-here.txt", __ASSET__assets_music_music_goes_here_txt);
-		type.set ("assets/music/music-goes-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
-		
-		className.set ("assets/sounds/sounds-go-here.txt", __ASSET__assets_sounds_sounds_go_here_txt);
-		type.set ("assets/sounds/sounds-go-here.txt", Reflect.field (AssetType, "text".toUpperCase ()));
+		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
+		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
@@ -678,12 +660,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 #if pixi
 #elseif flash
 
-@:keep class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray { }
-@:keep class __ASSET__assets_data_stage_csv extends flash.utils.ByteArray { }
+@:keep class __ASSET__assets_sounds_enemy_spawn_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_player_jump_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
-@:keep class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray { }
-@:keep class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray { }
-@:keep class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray { }
 @:keep class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound { }
 
@@ -697,18 +676,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
-
-
-
 #elseif (windows || mac || linux)
 
 
-@:file("assets/data/data-goes-here.txt") class __ASSET__assets_data_data_goes_here_txt extends flash.utils.ByteArray {}
-@:file("assets/data/stage.csv") class __ASSET__assets_data_stage_csv extends flash.utils.ByteArray {}
+@:sound("assets/sounds/enemy_spawn.wav") class __ASSET__assets_sounds_enemy_spawn_wav extends flash.media.Sound {}
+@:sound("assets/sounds/player_jump.wav") class __ASSET__assets_sounds_player_jump_wav extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
-@:file("assets/images/images-go-here.txt") class __ASSET__assets_images_images_go_here_txt extends flash.utils.ByteArray {}
-@:file("assets/music/music-goes-here.txt") class __ASSET__assets_music_music_goes_here_txt extends flash.utils.ByteArray {}
-@:file("assets/sounds/sounds-go-here.txt") class __ASSET__assets_sounds_sounds_go_here_txt extends flash.utils.ByteArray {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/beep.mp3") class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/flixel.mp3") class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound {}
 

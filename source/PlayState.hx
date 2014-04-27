@@ -75,7 +75,7 @@ class PlayState extends FlxState
 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,";
 
-		level.loadMap(stage, 'assets/images/basic-tiles.png');
+		level.loadMap(stage, 'basic-tiles');
 
 
 		// Set up Player
@@ -165,6 +165,7 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.UP && player.isTouching(FlxObject.FLOOR))
 		{
 			player.velocity.y = -player.maxVelocity.y / 2;
+			FlxG.sound.play("player_jump");
 		}
 		if (FlxG.keys.justPressed.X)
 		{
@@ -197,5 +198,6 @@ class PlayState extends FlxState
 	{
 		var spawn:FlxPoint = spawns[timer.elapsedLoops % 3];
 		enemies.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y)));
+		FlxG.sound.play("enemy_spawn");
 	}
 }
