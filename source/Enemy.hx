@@ -10,7 +10,7 @@ class Enemy extends FlxSprite {
 	private var chaseSpeed:Int = 80;
 	private var walkSpeed:Int = 60;
 
-	override public function new(x:Int, y:Int, ?color:Int = FlxColor.RED){
+	override public function new(x:Int, y:Int, ?color:Int = FlxColor.RED, ?health = 150){
 		super();
 
 		this.x = x;
@@ -19,6 +19,8 @@ class Enemy extends FlxSprite {
 		this.maxVelocity.x = walkSpeed;
 		this.maxVelocity.y = 300;
 		this.acceleration.y = 150;
+
+		this.health = health;
 
 
 		this.makeGraphic(7, 7, color);

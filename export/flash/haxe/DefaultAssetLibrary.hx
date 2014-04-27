@@ -50,6 +50,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
 		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
+		className.set ("a_black_horse", __ASSET__assets_music_a_black_horse_wav);
+		type.set ("a_black_horse", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("assets/sounds/flixel.mp3", __ASSET__assets_sounds_flixel_mp3);
@@ -65,6 +67,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		addExternal("teleport_end", "sound", "assets/sounds/teleport_end.wav");
 		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
 		addExternal("hunting_and_green", "music", "assets/music/hunting_and_green.wav");
+		addExternal("a_black_horse", "music", "assets/music/a_black_horse.wav");
 		addExternal("assets/sounds/beep.mp3", "music", "assets/sounds/beep.mp3");
 		addExternal("assets/sounds/flixel.mp3", "music", "assets/sounds/flixel.mp3");
 		
@@ -95,6 +98,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
 		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
+		
+		className.set ("a_black_horse", __ASSET__assets_music_a_black_horse_wav);
+		type.set ("a_black_horse", Reflect.field (AssetType, "music".toUpperCase ()));
 		
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
 		type.set ("assets/sounds/beep.mp3", Reflect.field (AssetType, "music".toUpperCase ()));
@@ -691,11 +697,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound { }
 
 
 #elseif html5
+
 
 
 
@@ -718,6 +726,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:sound("assets/sounds/teleport_end.wav") class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
 @:sound("assets/music/hunting_and_green.wav") class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound {}
+@:sound("assets/music/a_black_horse.wav") class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/beep.mp3") class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/flixel.mp3") class __ASSET__assets_sounds_flixel_mp3 extends flash.media.Sound {}
 

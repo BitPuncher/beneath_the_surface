@@ -13,7 +13,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
-import flixel.addons.FlxWeapon;
+import flixel.addons.weapon.FlxWeapon;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -32,6 +32,7 @@ class PlayState extends FlxState
 	private var teleportCooldown:Int = 2;
 	private var teleportCooldownTimer:FlxTimer;
 	private var weapon:FlxWeapon;
+	private var facingConversion:Map<Int, Int>;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -91,6 +92,7 @@ class PlayState extends FlxState
 		player.maxVelocity.x = 90;
 		player.maxVelocity.y = 300;
 		player.acceleration.y = 150;
+		player.facing = FlxObject.RIGHT;
 
 		player.drag.x = 100;
 
@@ -107,9 +109,9 @@ class PlayState extends FlxState
 
 		// Enemies
 		enemies = new FlxGroup();
-		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y), FlxColor.YELLOW));
-		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), FlxColor.YELLOW));
-		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), FlxColor.YELLOW));
+		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y), FlxColor.YELLOW, 100));
+		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), FlxColor.YELLOW, 100));
+		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), FlxColor.YELLOW, 100));
 
 		// Timers
 		timer = new FlxTimer();
@@ -122,11 +124,15 @@ class PlayState extends FlxState
 
 
 		// Weapon
-		weapon = new FlxWeapon("pistol");
+		weapon = new FlxWeapon("pistol", player);
 		weapon.makePixelBullet(10);
-		weapon.setBulletLifespan(0);
+		weapon.setBulletLifeSpan(0);
 		weapon.setFireRate(250);
-		weapon.setBulletSpeed(32);
+		weapon.setBulletSpeed(250);
+		facingConversion = new Map();
+		facingConversion.set(FlxObject.DOWN, FlxWeapon.BULLET_DOWN);
+		facingConversion.set(FlxObject.RIGHT, FlxWeapon.BULLET_RIGHT);
+		facingConversion.set(FlxObject.LEFT, FlxWeapon.BULLET_LEFT);
 
 
 		// Add all the things
@@ -134,6 +140,7 @@ class PlayState extends FlxState
 		add(player);
 		add(enemies);
 		add(timerText);
+		add(weapon.group);
 
 		FlxG.sound.play('hunting_and_green', 1, true);
 
@@ -159,6 +166,8 @@ class PlayState extends FlxState
 		FlxG.collide(player, level);
 		FlxG.collide(enemies, level);
 		FlxG.collide(enemies, player);
+		FlxG.collide(weapon.group, enemies, enemyHit);
+		FlxG.collide(weapon.group, level, killBullet);
 
 		// secondsToWave = Math.floor(FlxG.elapsed) % timeToWave;
 		timerText.text = (timer.elapsedLoops + 1) + ":" + Math.ceil(timer.timeLeft);
@@ -180,15 +189,21 @@ class PlayState extends FlxState
 		if (FlxG.keys.pressed.LEFT)
 		{
 			player.acceleration.x = -player.maxVelocity.x * 8;
+			player.facing = FlxObject.LEFT;
 		}
 		if (FlxG.keys.pressed.RIGHT)
 		{
 			player.acceleration.x = player.maxVelocity.x * 8;
+			player.facing = FlxObject.RIGHT;
 		}
 		if (FlxG.keys.justPressed.UP && player.isTouching(FlxObject.FLOOR))
 		{
 			player.velocity.y = -player.maxVelocity.y / 2;
 			FlxG.sound.play("player_jump");
+		}
+		if (FlxG.keys.pressed.DOWN)
+		{
+			player.facing = FlxObject.DOWN;
 		}
 		if (FlxG.keys.justPressed.X)
 		{
@@ -196,8 +211,9 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keys.pressed.C)
 		{
-			weapon.setBulletDirection(player.facing);
+			weapon.setBulletDirection(facingConversion[player.facing], weapon.bulletSpeed);
 			weapon.fire();
+			
 		}
 	}
 
@@ -242,6 +258,18 @@ class PlayState extends FlxState
 		{
 			return new FlxPoint(origin.x, -origin.y + container.height);
 		}
+	}
+
+	// Bullet callbacks
+	private function killBullet(bullet:FlxObject, object:FlxObject):Void
+	{
+		bullet.kill();
+	}
+
+	private function enemyHit(bullet:FlxObject, object:FlxObject):Void
+	{
+		bullet.kill();
+		object.hurt(50);
 	}
 
 	// Timer callbacks
