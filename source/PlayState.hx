@@ -13,6 +13,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
+import flixel.addons.FlxWeapon;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -30,6 +31,7 @@ class PlayState extends FlxState
 	private var teleportReady:Bool = true;
 	private var teleportCooldown:Int = 2;
 	private var teleportCooldownTimer:FlxTimer;
+	private var weapon:FlxWeapon;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -116,6 +118,16 @@ class PlayState extends FlxState
 
 		teleportCooldownTimer = new FlxTimer();
 
+		// Bullets
+
+
+		// Weapon
+		weapon = new FlxWeapon("pistol");
+		weapon.makePixelBullet(10);
+		weapon.setBulletLifespan(0);
+		weapon.setFireRate(250);
+		weapon.setBulletSpeed(32);
+
 
 		// Add all the things
 		add(level);
@@ -181,6 +193,11 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.X)
 		{
 			teleport(player, level);
+		}
+		if (FlxG.keys.pressed.C)
+		{
+			weapon.setBulletDirection(player.facing);
+			weapon.fire();
 		}
 	}
 
