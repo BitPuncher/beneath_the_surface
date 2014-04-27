@@ -54,6 +54,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("pickup", __ASSET__assets_images_pickup_png);
 		type.set ("pickup", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("controls", __ASSET__assets_images_controls_png);
+		type.set ("controls", Reflect.field (AssetType, "image".toUpperCase ()));
+		className.set ("arrows", __ASSET__assets_images_arrows_png);
+		type.set ("arrows", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
 		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
 		className.set ("a_black_horse", __ASSET__assets_music_a_black_horse_wav);
@@ -75,6 +79,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		addExternal("enemy_death", "sound", "assets/sounds/enemy_death.wave");
 		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
 		addExternal("pickup", "image", "assets/images/pickup.png");
+		addExternal("controls", "image", "assets/images/controls.png");
+		addExternal("arrows", "image", "assets/images/arrows.png");
 		addExternal("hunting_and_green", "music", "assets/music/hunting_and_green.wav");
 		addExternal("a_black_horse", "music", "assets/music/a_black_horse.wav");
 		addExternal("assets/sounds/beep.mp3", "music", "assets/sounds/beep.mp3");
@@ -113,6 +119,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("pickup", __ASSET__assets_images_pickup_png);
 		type.set ("pickup", Reflect.field (AssetType, "image".toUpperCase ()));
+		
+		className.set ("controls", __ASSET__assets_images_controls_png);
+		type.set ("controls", Reflect.field (AssetType, "image".toUpperCase ()));
+		
+		className.set ("arrows", __ASSET__assets_images_arrows_png);
+		type.set ("arrows", Reflect.field (AssetType, "image".toUpperCase ()));
 		
 		className.set ("hunting_and_green", __ASSET__assets_music_hunting_and_green_wav);
 		type.set ("hunting_and_green", Reflect.field (AssetType, "music".toUpperCase ()));
@@ -717,6 +729,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_images_pickup_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_controls_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep class __ASSET__assets_images_arrows_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound { }
@@ -724,6 +738,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
+
 
 
 
@@ -752,6 +768,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:sound("assets/sounds/enemy_death.wave") class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
 @:bitmap("assets/images/pickup.png") class __ASSET__assets_images_pickup_png extends flash.display.BitmapData {}
+@:bitmap("assets/images/controls.png") class __ASSET__assets_images_controls_png extends flash.display.BitmapData {}
+@:bitmap("assets/images/arrows.png") class __ASSET__assets_images_arrows_png extends flash.display.BitmapData {}
 @:sound("assets/music/hunting_and_green.wav") class __ASSET__assets_music_hunting_and_green_wav extends flash.media.Sound {}
 @:sound("assets/music/a_black_horse.wav") class __ASSET__assets_music_a_black_horse_wav extends flash.media.Sound {}
 @:sound("/usr/lib/haxe/lib/flixel/3,3,1/assets/sounds/beep.mp3") class __ASSET__assets_sounds_beep_mp3 extends flash.media.Sound {}

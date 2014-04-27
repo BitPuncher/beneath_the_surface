@@ -44,6 +44,9 @@ class PlayState extends FlxState
 	private var resourceBar:FlxBar;
 	private var muteButton:FlxButton;
 	private var muted:Bool = false;
+	private var instructions:FlxText;
+	private var controls:FlxSprite;
+	private var arrows:FlxSprite;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -160,6 +163,11 @@ class PlayState extends FlxState
 		pickups = new FlxGroup();
 
 		// Buttons
+		instructions = new FlxText(level.width + 10, 60, 50, "Move: \n\n\n\n\nShoot: \n\nTeleport: \n\nMute:");
+		arrows = new FlxSprite(level.width + 10 + 50, 60);
+		arrows.loadGraphic("arrows");
+		controls = new FlxSprite(level.width + 10 + 50 + 20, 100);
+		controls.loadGraphic("controls");
 		// muteButton = new FlxButton(level.width + 10, 50, "Mute", muteSound);
 
 		// Add all the things
@@ -171,6 +179,9 @@ class PlayState extends FlxState
 		add(weapon.group);
 		add(resourceBar);
 		add(pickups);
+		add(instructions);
+		add(arrows);
+		add(controls);
 		// add(muteButton);
 
 
@@ -243,7 +254,7 @@ class PlayState extends FlxState
 		{
 			player.facing = FlxObject.DOWN;
 		}
-		if (FlxG.keys.justPressed.X)
+		if (FlxG.keys.justPressed.Z)
 		{
 			teleport(player, level);
 		}
