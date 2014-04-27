@@ -101,9 +101,9 @@ class PlayState extends FlxState
 
 		// Enemies
 		enemies = new FlxGroup();
-		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y)), FlxColor.YELLOW);
-		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y)), FlxColor.YELLOW);
-		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y)), FlxColor.YELLOW);
+		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y), FlxColor.YELLOW));
+		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), FlxColor.YELLOW));
+		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), FlxColor.YELLOW));
 
 		// Timer
 		timer = new FlxTimer();
