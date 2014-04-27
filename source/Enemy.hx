@@ -10,21 +10,31 @@ class Enemy extends FlxSprite {
 
 	private var chaseSpeed:Int = 80;
 	private var walkSpeed:Int = 60;
+	public var spawnsPickups:Bool;
 
-	override public function new(x:Int, y:Int, ?color:Int = FlxColor.RED, ?health = 150){
+	override public function new(x:Int, y:Int, ?health = 150, ?type = "red", ?color:Int = FlxColor.RED) {
 		super();
-
-		this.x = x;
-		this.y = y;
 
 		this.maxVelocity.x = walkSpeed;
 		this.maxVelocity.y = 300;
 		this.acceleration.y = 150;
 
+		this.init(x, y, color, health);
+		
+	}
+
+	public function init (x:Int, y:Int, ?color:Int = FlxColor.RED, ?health = 150) {
+		this.x = x;
+		this.y = y;
+		this.makeGraphic(7, 7, color);
 		this.health = health;
 
-
-		this.makeGraphic(7, 7, color);
+		if (color == FlxColor.YELLOW) {
+			spawnsPickups = true;
+		}
+		else {
+			spawnsPickups = false;
+		}
 	}
 
 	override public function update() {

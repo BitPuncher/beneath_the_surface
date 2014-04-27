@@ -40,6 +40,7 @@
 		<sound path="sounds/enemy_death.wave" id="enemy_death" />
 		<!-- images -->
 		<image path="images/basic-tiles.png" id="basic-tiles" />
+		<image path="images/pickup.png" id="pickup" />
 		<!-- music -->
 		<music path="music/hunting_and_green.wav" id="hunting_and_green" />
 		<music path="music/a_black_horse.wav" id="a_black_horse" />

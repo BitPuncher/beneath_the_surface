@@ -16,6 +16,7 @@ import flixel.tweens.FlxTween;
 import flixel.addons.weapon.FlxWeapon;
 import flixel.system.FlxSound;
 import flixel.ui.FlxBar;
+import flixel.ui.FlxButton;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -25,10 +26,11 @@ class PlayState extends FlxState
 
 	private var player:FlxSprite;
 	private var level:FlxTilemap;
-	private var enemies:FlxGroup;
+	private var reds:FlxGroup;
+	private var yellows:FlxGroup;
 	private var timer:FlxTimer;
 	private var timerText:FlxText;
-	private var timeToWave:Int = 7;
+	private var timeToWave:Int = 3;
 	private var spawns:Array<FlxPoint>;
 	private var teleportReady:Bool = true;
 	private var teleportCooldown:Int = 2;
@@ -37,9 +39,11 @@ class PlayState extends FlxState
 	private var facingConversion:Map<Int, Int>;
 	private var pickups:FlxGroup;
 	private var firingCost:Int = 15;
-	private var resource:Int = 0;
+	private var resource:FlxSprite;
 	private var maxResource:Int = 100;
 	private var resourceBar:FlxBar;
+	private var muteButton:FlxButton;
+	private var muted:Bool = false;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -115,10 +119,14 @@ class PlayState extends FlxState
 		spawns.insert(5, new FlxPoint(220, 110));
 
 		// Enemies
-		enemies = new FlxGroup();
-		enemies.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y), FlxColor.YELLOW, 100));
-		enemies.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), FlxColor.YELLOW, 100));
-		enemies.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), FlxColor.YELLOW, 100));
+		reds = new FlxGroup();
+		yellows = new FlxGroup();
+		// Reds
+
+		// Yellows
+		yellows.add(new Enemy(Math.floor(spawns[3].x), Math.floor(spawns[3].y), 100, "yellow", FlxColor.YELLOW));
+		yellows.add(new Enemy(Math.floor(spawns[4].x), Math.floor(spawns[4].y), 100, "yellow", FlxColor.YELLOW));
+		yellows.add(new Enemy(Math.floor(spawns[5].x), Math.floor(spawns[5].y), 100, "yellow", FlxColor.YELLOW));
 
 		// Timers
 		timer = new FlxTimer();
@@ -144,21 +152,30 @@ class PlayState extends FlxState
 		facingConversion.set(FlxObject.LEFT, FlxWeapon.BULLET_LEFT);
 
 		// Resource
-		resource = 0;
-		resourceBar = new FlxBar(level.width + 10, 30, FlxBar.FILL_LEFT_TO_RIGHT, 150, 15, null, resource);
+		resource = new FlxSprite(0, 0);
+		resource.visible = false;
+		resourceBar = new FlxBar(level.width + 10, 30, FlxBar.FILL_LEFT_TO_RIGHT, 100, 15, resource, "health");
 
 		// Pickups
 		pickups = new FlxGroup();
 
+		// Buttons
+		// muteButton = new FlxButton(level.width + 10, 50, "Mute", muteSound);
+
 		// Add all the things
 		add(level);
 		add(player);
-		add(enemies);
+		add(reds);
+		add(yellows);
 		add(timerText);
 		add(weapon.group);
 		add(resourceBar);
+		add(pickups);
+		// add(muteButton);
 
-		FlxG.sound.play('hunting_and_green', 1, true);
+
+		FlxG.sound.muteKeys = ["M"];
+		FlxG.sound.play('hunting_and_green', 5, true);
 
 		super.create();
 	}
@@ -180,10 +197,15 @@ class PlayState extends FlxState
 		// updatePlayer(player);
 
 		FlxG.collide(player, level);
-		FlxG.collide(enemies, level);
-		FlxG.collide(enemies, player);
-		FlxG.collide(weapon.group, enemies, enemyHit);
+		FlxG.collide(reds, level);
+		FlxG.collide(reds, player);
+		FlxG.collide(yellows, level);
+		FlxG.collide(yellows, player);
+		FlxG.collide(weapon.group, reds, enemyHit);
+		FlxG.collide(weapon.group, yellows, enemyHit);
 		FlxG.collide(weapon.group, level, killBullet);
+		FlxG.collide(pickups, level);
+		FlxG.collide(pickups, player, gainResource);
 
 		// secondsToWave = Math.floor(FlxG.elapsed) % timeToWave;
 		timerText.text = (timer.elapsedLoops + 1) + ":" + Math.ceil(timer.timeLeft);
@@ -281,22 +303,20 @@ class PlayState extends FlxState
 		bullet.kill();
 	}
 
-	private function enemyHit(bullet:FlxObject, object:FlxObject):Void
+	private function enemyHit(bullet:FlxObject, object:Enemy):Void
 	{
 		bullet.kill();
 		object.hurt(50);
-	}
 
-	private function loseResource():Void
-	{
-		if (player.y > level.height / 2) {
-			resource -= firingCost;
+		if (object.health <= 0 && object.spawnsPickups) {
+			pickups.add(new Pickup(object.x, object.y));
 		}
 	}
 
+
 	private function playerHasResources():Bool
 	{
-		if (player.y < level.height / 2 || resource >= firingCost) {
+		if (player.y < level.height / 2 || resource.health >= firingCost) {
 			return true;
 		}
 		else {
@@ -304,16 +324,47 @@ class PlayState extends FlxState
 		}
 	}
 
+	// Resource callbacks
+	private function gainResource(pickup:Pickup, player:FlxSprite):Void {
+		pickup.kill();
+		resource.health = FlxMath.bound(Math.round(maxResource / 3) + resource.health, 0, maxResource);
+	}
+
+	private function loseResource():Void
+	{
+		if (player.y > level.height / 2) {
+			resource.health -= firingCost;
+		}
+	}
+
 	// Timer callbacks
 	private function spawnWave(timer:FlxTimer):Void
 	{
 		var spawn:FlxPoint = spawns[timer.elapsedLoops % 3];
-		enemies.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y)));
+		reds.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y)));
+
+		spawn = spawns[timer.elapsedLoops % 3 + 3];
+		if (yellows.countLiving() < 3) {
+			yellows.add(new Enemy(Math.round(spawn.x), Math.round(spawn.y), 100, "yellow", FlxColor.YELLOW));
+		}
+		
 		FlxG.sound.play("enemy_spawn");
 	}
 
 	private function tpTimerFinished(timer:FlxTimer):Void
 	{
 		teleportReady = true;
+	}
+
+	// Sound
+
+	private function muteSound():Void {
+		if (FlxG.sound.muted) {
+			FlxG.sound.resume();
+			FlxG.sound.playMusic("hunting_and_green", 5, true);
+		}
+		else {
+			FlxG.sound.pause();
+		}
 	}
 }
