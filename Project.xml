@@ -37,7 +37,8 @@
 		<sound path="sounds/teleport_start.wav" id="teleport_start" />
 		<sound path="sounds/teleport_end.wav" id="teleport_end" />
 		<sound path="sounds/fire_bullet.wav" id="fire_bullet" />
-		<sound path="sounds/enemy_death.wave" id="enemy_death" />
+		<sound path="sounds/enemy_death.wav" id="enemy_death" />
+		<sound path="sounds/pickup.wav" id="pickupSound" />
 		<!-- images -->
 		<image path="images/basic-tiles.png" id="basic-tiles" />
 		<image path="images/pickup.png" id="pickup" />

@@ -48,8 +48,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("teleport_end", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("fire_bullet", __ASSET__assets_sounds_fire_bullet_wav);
 		type.set ("fire_bullet", Reflect.field (AssetType, "sound".toUpperCase ()));
-		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wave);
+		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wav);
 		type.set ("enemy_death", Reflect.field (AssetType, "sound".toUpperCase ()));
+		className.set ("pickupSound", __ASSET__assets_sounds_pickup_wav);
+		type.set ("pickupSound", Reflect.field (AssetType, "sound".toUpperCase ()));
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
 		className.set ("pickup", __ASSET__assets_images_pickup_png);
@@ -78,7 +80,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		addExternal("teleport_start", "sound", "assets/sounds/teleport_start.wav");
 		addExternal("teleport_end", "sound", "assets/sounds/teleport_end.wav");
 		addExternal("fire_bullet", "sound", "assets/sounds/fire_bullet.wav");
-		addExternal("enemy_death", "sound", "assets/sounds/enemy_death.wave");
+		addExternal("enemy_death", "sound", "assets/sounds/enemy_death.wav");
+		addExternal("pickupSound", "sound", "assets/sounds/pickup.wav");
 		addExternal("basic-tiles", "image", "assets/images/basic-tiles.png");
 		addExternal("pickup", "image", "assets/images/pickup.png");
 		addExternal("controls", "image", "assets/images/controls.png");
@@ -114,8 +117,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("fire_bullet", __ASSET__assets_sounds_fire_bullet_wav);
 		type.set ("fire_bullet", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
-		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wave);
+		className.set ("enemy_death", __ASSET__assets_sounds_enemy_death_wav);
 		type.set ("enemy_death", Reflect.field (AssetType, "sound".toUpperCase ()));
+		
+		className.set ("pickupSound", __ASSET__assets_sounds_pickup_wav);
+		type.set ("pickupSound", Reflect.field (AssetType, "sound".toUpperCase ()));
 		
 		className.set ("basic-tiles", __ASSET__assets_images_basic_tiles_png);
 		type.set ("basic-tiles", Reflect.field (AssetType, "image".toUpperCase ()));
@@ -732,7 +738,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_sounds_fire_bullet_wav extends flash.media.Sound { }
-@:keep class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_enemy_death_wav extends flash.media.Sound { }
+@:keep class __ASSET__assets_sounds_pickup_wav extends flash.media.Sound { }
 @:keep class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_images_pickup_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep class __ASSET__assets_images_controls_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -764,6 +771,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
 #elseif (windows || mac || linux)
 
 
@@ -773,7 +781,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:sound("assets/sounds/teleport_start.wav") class __ASSET__assets_sounds_teleport_start_wav extends flash.media.Sound {}
 @:sound("assets/sounds/teleport_end.wav") class __ASSET__assets_sounds_teleport_end_wav extends flash.media.Sound {}
 @:sound("assets/sounds/fire_bullet.wav") class __ASSET__assets_sounds_fire_bullet_wav extends flash.media.Sound {}
-@:sound("assets/sounds/enemy_death.wave") class __ASSET__assets_sounds_enemy_death_wave extends flash.media.Sound {}
+@:sound("assets/sounds/enemy_death.wav") class __ASSET__assets_sounds_enemy_death_wav extends flash.media.Sound {}
+@:sound("assets/sounds/pickup.wav") class __ASSET__assets_sounds_pickup_wav extends flash.media.Sound {}
 @:bitmap("assets/images/basic-tiles.png") class __ASSET__assets_images_basic_tiles_png extends flash.display.BitmapData {}
 @:bitmap("assets/images/pickup.png") class __ASSET__assets_images_pickup_png extends flash.display.BitmapData {}
 @:bitmap("assets/images/controls.png") class __ASSET__assets_images_controls_png extends flash.display.BitmapData {}

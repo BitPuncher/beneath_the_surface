@@ -375,6 +375,7 @@ class PlayState extends FlxState
 	private function gainResource(pickup:Pickup, player:FlxSprite):Void {
 		pickup.kill();
 		resource.health = FlxMath.bound(Math.round(maxResource / 4) + resource.health, 0, maxResource);
+		FlxG.sound.play("pickupSound");
 	}
 
 	private function loseResource():Void

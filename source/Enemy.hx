@@ -59,7 +59,11 @@ class Enemy extends FlxSprite {
 
 	override public function destroy() {
 		super.destroy();
-	
+	}
+
+	override public function kill() {
+		super.kill();
+		FlxG.sound.play("enemy_death");
 	}
 
 	public function lookForPlayer(player:FlxSprite):Void {
